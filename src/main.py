@@ -1,5 +1,5 @@
 from textnode import TextNode
-from htmlnode import HTMLNode,LeafNode
+from htmlnode import HTMLNode,LeafNode,ParentNode
 
 def main():
     obj1 = TextNode("this is textnode", "bold", "https://www.boot.dev")
