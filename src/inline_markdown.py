@@ -10,10 +10,13 @@ def split_nodes_delimiter(old_nodes,delimeter,text_type):
             nodes = []
             if len(split_nodes) % 2 == 0:
                 raise ValueError("Invalid markdown, formatted section not closed")
-            for i in len(split_nodes):
-                if i % 2 == 0:
-                    nodes.append(TextNode(split_nodes[i],"text"))
-                else:
-                    nodes.append(TextNode(split_nodes[i], text_type))
+            for i in range(len(split_nodes)):
+                if split_nodes[i] != "":
+
+                    if i % 2 == 0:
+                        nodes.append(TextNode(split_nodes[i],"text"))
+                    else:
+                        nodes.append(TextNode(split_nodes[i], text_type))
+                        
             new_nodes.extend(nodes)
     return new_nodes
