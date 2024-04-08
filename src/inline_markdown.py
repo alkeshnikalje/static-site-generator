@@ -51,3 +51,23 @@ def split_nodes_image(old_nodes):
             if text_to_be_processed:
                 new_nodes.append(TextNode(text_to_be_processed,"text"))
     return new_nodes
+
+def split_nodes_link(old_nodes):
+    new_nodes = []
+    for node in old_nodes:
+        matches = extract_markdown_links(node.text)
+        if len(matches) == 0:
+            new_nodes.append(node)
+        else:
+            text_to_be_processed = node.text
+            for match in matches:
+                delimter = f"[{match[0]}]({match[1]})"
+                split_text = text_to_be_processed.split(delimter,1)
+                if split_text[0]:
+                    new_nodes.append(TextNode(split_text[0],"text"))
+                new_nodes.append(TextNode(match[0],"link",match[1]))
+                if len(split_text) > 1:
+                    text_to_be_processed = split_text[1]
+            if text_to_be_processed:
+                new_nodes.append(TextNode(text_to_be_processed,"text"))
+    return new_nodes
