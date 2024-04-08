@@ -1,5 +1,5 @@
 import unittest
-from inline_markdown import split_nodes_delimiter,extract_markdown_links,extract_markdown_images
+from inline_markdown import split_nodes_delimiter,extract_markdown_links,extract_markdown_images, split_nodes_image
 
 from textnode import TextNode
 
@@ -87,6 +87,34 @@ class TestInlineMarkdown(unittest.TestCase):
                 ("another link", "https://blog.boot.dev"),
             ],
             matches,
+        )
+
+    def test_split_nodes_image(self):
+        node = TextNode(
+    "This is text with an ![image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png) and another ![second image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/3elNhQu.png)",
+    "text",
+)
+        new_nodes = split_nodes_image([node])
+        self.assertEqual([
+                TextNode("This is text with an ", "text"),
+                TextNode("image", "image", "https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png"),
+                TextNode(" and another ", "text"),
+                TextNode(
+                    "second image", "image", "https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/3elNhQu.png"
+                ),
+            ],new_nodes)
+    
+    def test_split_image_single(self):
+        node = TextNode(
+            "![image](https://www.example.com/image.png)",
+            "text",
+        )
+        new_nodes = split_nodes_image([node])
+        self.assertListEqual(
+            [
+                TextNode("image", "image", "https://www.example.com/image.png")
+            ],
+            new_nodes,
         )
 
 
