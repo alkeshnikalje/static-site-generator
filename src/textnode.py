@@ -1,5 +1,4 @@
 from htmlnode import LeafNode
-from inline_markdown import split_nodes_delimiter,split_nodes_link,split_nodes_image
 class TextNode:
     def __init__(self, text,text_type,url=None):
         self.text = text
@@ -33,13 +32,3 @@ def text_node_to_html_node(text_node):
     if text_node.text_type == "image":
         return LeafNode("img", "",{"href": text_node.url, "alt":text_node.text})
     raise ValueError(f"Invalid text type: {text_node.text_type}")
-
-
-def text_to_textnodes(text):
-    nodes = [TextNode(text,"text")]
-    nodes = split_nodes_delimiter(nodes,"**", "text")
-    nodes = split_nodes_delimiter(nodes,"*", "text")
-    nodes = split_nodes_delimiter(nodes,"`", "text")
-    nodes = split_nodes_image(nodes)
-    nodes = split_nodes_link(nodes)
-    return nodes

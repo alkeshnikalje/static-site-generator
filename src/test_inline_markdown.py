@@ -1,5 +1,5 @@
 import unittest
-from inline_markdown import split_nodes_delimiter,extract_markdown_links,extract_markdown_images, split_nodes_image,split_nodes_link
+from inline_markdown import split_nodes_delimiter,extract_markdown_links,extract_markdown_images, split_nodes_image,split_nodes_link,text_to_textnodes
 
 from textnode import TextNode
 
@@ -133,7 +133,25 @@ class TestInlineMarkdown(unittest.TestCase):
             ],
             new_nodes,
         )
-
+    def test_text_to_textnodes(self):
+        nodes = text_to_textnodes(
+            "This is **text** with an *italic* word and a `code block` and an ![image](https://i.imgur.com/zjjcJKZ.png) and a [link](https://boot.dev)"
+        )
+        self.assertListEqual(
+            [
+                TextNode("This is ", "text"),
+                TextNode("text", "bold"),
+                TextNode(" with an ", "text"),
+                TextNode("italic", "italic"),
+                TextNode(" word and a ", "text"),
+                TextNode("code block", "code"),
+                TextNode(" and an ", "text"),
+                TextNode("image", "image", "https://i.imgur.com/zjjcJKZ.png"),
+                TextNode(" and a ", "text"),
+                TextNode("link", "link", "https://boot.dev"),
+            ],
+            nodes,
+        )
 
 if __name__ == "__main__":
     unittest.main()
