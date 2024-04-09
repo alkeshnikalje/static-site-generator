@@ -24,14 +24,14 @@ def block_to_block_type(block):
             if not line.startswith(">"):
                 return block_type_paragraph
         return block_type_quote
-    if block.startswtih("* ") or block.startswith("- "):
+    if block.startswith("* ") or block.startswith("- "):
         for line in lines:
-            if not line.startswith("* ") or not line.startswith("- "):
+            if not (line.startswith("* ") or line.startswith("- ")):
                 return block_type_paragraph
         return block_type_unordered_list
     if block.startswith("1. "):
         for i in range(len(lines)):
-            if not lines[i].startswith(f"{i+1} "):
+            if not lines[i].startswith(f"{i+1}. "):
                 return block_type_paragraph
         return block_type_ordered_list
     return block_type_paragraph
