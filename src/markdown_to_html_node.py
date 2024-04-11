@@ -78,7 +78,7 @@ def block_to_htmlnode_ordered_list(block):
             text = item[3:]
             children = text_to_children(text)
             ol_children.append(ParentNode("li",children))
-    return ParentNode("ol",children)
+    return ParentNode("ol",ol_children)
 
 def block_to_htmlnode_unordered_list(block):
     list_items = block.split("\n")
