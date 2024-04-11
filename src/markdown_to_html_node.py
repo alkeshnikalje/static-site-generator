@@ -21,6 +21,8 @@ def block_to_html_node(block,block_type):
     if block_type == block_type_ordered_list:
         return block_to_htmlnode_ordered_list(block)
     if block_type == block_type_unordered_list:
+        return block_to_htmlnode_unordered_list(block)
+    if block_type == block_type_quote:
         pass
 
 def text_to_children(text):
@@ -79,3 +81,14 @@ def block_to_htmlnode_unordered_list(block):
             children = text_to_children(text)
             ul_children.append(ParentNode("li",children))
     return ParentNode("ul",ul_children)
+
+def block_to_htmlnode_quote(block):
+    quote_lines = block.split("\n")
+    text = ""
+    for quote_line in quote_lines:
+        if quote_line == "":
+            continue
+        else:
+            text += quote_line[2:] + " "
+    children = text_to_children(text[:-1])
+    return ParentNode("blockquote", children)
