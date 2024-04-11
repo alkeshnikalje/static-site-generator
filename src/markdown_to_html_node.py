@@ -13,6 +13,12 @@ from block_markdown import (
 )
 def block_to_html_node(block,block_type):
     if block_type == block_type_heading:
+        return block_to_htmlnode_heading(block)
+    if block_type == block_type_paragraph:
+        return block_to_htmlnode_paragraph(block)
+    if block_type == block_type_code:
+        return block_to_htmlnode_code(block)
+    if block_type == block_type_ordered_list:
         pass
 
 def text_to_children(text):
@@ -29,8 +35,25 @@ def block_to_htmlnode_heading(block):
             heading += 1
         else:
             break
-    if heading > 6 or heading+1 > len(block):
+    if heading + 1 > len(block):
         raise ValueError(f"heading level {heading} is invalid")
     text = block[heading+1:len(block)]
     children = text_to_children(text)
     return ParentNode(f"h{heading}", children)
+
+def block_to_htmlnode_paragraph(block):
+    lines = block.split("\n")
+    text = " ".join(lines)
+    children = text_to_children(text)
+    return ParentNode("p",children)
+
+
+def block_to_htmlnode_code(block):
+    text = block[4:-3]
+    children = text_to_children(text)
+    code = ParentNode("code",children)
+    return ParentNode("pre",[code])
+
+def block_to_htmlnode_ordered_list(block):
+    lines = block.split("\n")
+    pass
