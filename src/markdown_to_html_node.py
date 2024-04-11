@@ -19,6 +19,8 @@ def block_to_html_node(block,block_type):
     if block_type == block_type_code:
         return block_to_htmlnode_code(block)
     if block_type == block_type_ordered_list:
+        return block_to_htmlnode_ordered_list(block)
+    if block_type == block_type_unordered_list:
         pass
 
 def text_to_children(text):
@@ -55,5 +57,25 @@ def block_to_htmlnode_code(block):
     return ParentNode("pre",[code])
 
 def block_to_htmlnode_ordered_list(block):
-    lines = block.split("\n")
-    pass
+    list_items = block.split("\n")
+    ol_children = []
+    for item in list_items:
+        if item == "":
+            continue
+        else:
+            text = item[3:]
+            children = text_to_children(text)
+            ol_children.append(ParentNode("li",children))
+    return ParentNode("ol",children)
+
+def block_to_htmlnode_unordered_list(block):
+    list_items = block.split("\n")
+    ul_children = []
+    for item in list_items:
+        if item == "":
+            continue
+        else:
+            text = item[2:]
+            children = text_to_children(text)
+            ul_children.append(ParentNode("li",children))
+    return ParentNode("ul",ul_children)
