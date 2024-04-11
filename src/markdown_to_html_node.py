@@ -11,6 +11,16 @@ from block_markdown import (
     block_type_unordered_list,
     block_type_quote,
 )
+
+def markdown_to_html_node(markdown):
+    children = []
+    blocks = markdown_to_blocks(markdown)
+    for block in blocks:
+        block_type = block_to_block_type(block)
+        child  = block_to_html_node(block,block_type)
+        children.append(child)
+    return ParentNode("div",children)
+
 def block_to_html_node(block,block_type):
     if block_type == block_type_heading:
         return block_to_htmlnode_heading(block)
@@ -23,7 +33,7 @@ def block_to_html_node(block,block_type):
     if block_type == block_type_unordered_list:
         return block_to_htmlnode_unordered_list(block)
     if block_type == block_type_quote:
-        pass
+        return block_to_htmlnode_quote(block)
 
 def text_to_children(text):
     text_nodes = text_to_textnodes(text)
