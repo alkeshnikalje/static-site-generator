@@ -24,33 +24,20 @@ class HTMLNode:
     
 
 class LeafNode(HTMLNode):
-    def __init__(self, tag=None, value=None, props=None):
-        super().__init__(tag=tag, value=value, props=props)
-    
-    def __eq__(self,other):
-            return (
-            isinstance(other, LeafNode) and
-            self.tag == other.tag and
-            self.value == other.value and
-            self.props == other.props
-        )
-    
+    def __init__(self, tag, value, props=None):
+        super().__init__(tag, value, None, props)
+
     def to_html(self):
-
-        if not self.value:
-            raise ValueError("Leafnode should have a value")
-
-        if not self.tag:
+        if self.value is None:
+            raise ValueError("Invalid HTML: no value")
+        if self.tag is None:
             return self.value
-        
-        if not self.props:
-            return f"<{self.tag}>{self.value}</{self.tag}>"
-        
-        html_attrs = super().props_to_html()
-        return f'<{self.tag}{html_attrs}>{self.value}</{self.tag}>'
+        return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
 
-    def __str__(self):
-        return f"LeafNode({self.tag},{self.value},{self.props})"
+    def __repr__(self):
+        return f"LeafNode({self.tag}, {self.value}, {self.props})"
+    
+
 
 class ParentNode(HTMLNode):
     def __init__(self,tag=None,children=None, props=None,):
