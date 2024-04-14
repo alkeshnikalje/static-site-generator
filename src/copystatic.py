@@ -37,9 +37,8 @@ def generate_page(from_path,template_path,dest_path):
     node = markdown_to_html_node(markdown)
     html = node.to_html()
     title = extract_title(markdown)
-    print(title)
-    new_template = template.replace("{{ Title }}",title)
-    new_template = template.replace("{{ Content }}", html)
+    new_template = template.replace("{{ Title }}", title)
+    new_template = new_template.replace("{{ Content }}", html)
     dest_dir_path = os.path.dirname(dest_path)
     if dest_dir_path != "":
         os.makedirs(dest_dir_path, exist_ok=True)

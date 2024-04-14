@@ -2,7 +2,7 @@
 
 [Back Home](/)
 
-![LOTR image artistmonkeys](/images/rivendell.png)
+![LOTR image artistmonkeys](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTB6_vc3NxGqw57Ja9Ky8FLRA4KaiM5U-euj2pCgoe92Q&s)
 
 > "I cordially dislike allegory in all its manifestations, and always have done so since I grew old and wary enough to detect its presence.
 > I much prefer history, true or feigned, with its varied applicability to the thought and experience of readers.
